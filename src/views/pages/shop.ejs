@@ -1,0 +1,34 @@
+<%- include('../partials/header') %>
+
+<div class="shop-container">
+    <h2>Przedmioty w sprzedaży</h2>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nazwa</th>
+                <th>Cena</th>
+                <th>Akcja</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% items.forEach(item => { %>
+                <tr>
+                    <td><%= item.name %></td>
+                    <td><%= item.price %> zł</td>
+                    <td>
+                        <% if (user) { %>
+                            <form action="/trade/buy/<%= item.id %>" method="POST">
+                                <button type="submit">Kup teraz</button>
+                            </form>
+                        <% } else { %>
+                            ---
+                        <% } %>
+                    </td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+</div>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,95 @@
+<%- include('../partials/header') %>
+
+<div class="shop-container">
+    <h2>Centrum Wymiany</h2>
+    <form action="/trade/request" method="POST">
+        <table>
+            <tr>
+                <th>Opcja</th>
+                <th>Wybór</th>
+            </tr>
+            <tr>
+                <td><strong>Odbiorca:</strong></td>
+                <td>
+                    <select name="receiverId" required style="width: 100%;">
+                        <option value="" disabled selected>Wybierz gracza...</option>
+                        <% allUsers.forEach(u => { %>
+                            <option value="<%= u.id %>"><%= u.username %></option>
+                        <% }); %>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Chcesz od niego:</strong></td>
+                <td>
+                    <select name="wantedItemId" style="width: 100%;">
+                        <option value="">Brak przedmiotu</option>
+                        <% otherItems.forEach(item => { %>
+                            <option value="<%= item.id %>"><%= item.name %> (u: <%= item.owner_name %>)</option>
+                        <% }); %>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Dajesz od siebie:</strong></td>
+                <td>
+                    <select name="offeredItemId" style="width: 100%;">
+                        <option value="">Brak przedmiotu</option>
+                        <% userItems.forEach(item => { %>
+                            <option value="<%= item.id %>"><%= item.name %></option>
+                        <% }); %>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Dopłata:</strong></td>
+                <td>
+                    <input type="number" name="offeredMoney" value="0" min="0" step="0.01" style="width: 95%;">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center;">
+                    <button type="submit">Wyślij ofertę</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <br><br>
+
+    <h3>Otrzymane prośby</h3>
+    <table>
+        <tr>
+            <th>Od kogo</th>
+            <th>On chce Twój</th>
+            <th>Daje Ci w zamian</th>
+            <th>Akcje</th>
+        </tr>
+        <% if (incomingRequests.length === 0) { %>
+            <tr>
+                <td colspan="4" style="text-align: center;">Brak oczekujących ofert</td>
+            </tr>
+        <% } %>
+        <% incomingRequests.forEach(req => { %>
+            <tr>
+                <td><%= req.sender_name %></td>
+                <td><%= req.item_name ? req.item_name : 'PREZENT' %></td>
+                <td>
+                    <%= req.offered_item_name ? req.offered_item_name : '' %>
+                    <%= (req.offered_item_name && req.offered_money > 0) ? ' + ' : '' %>
+                    <%= req.offered_money > 0 ? req.offered_money + ' zł' : '' %>
+                </td>
+                <td>
+                    <form action="/trade/accept/<%= req.id %>" method="POST" style="display:inline;">
+                        <button type="submit">Akceptuj</button>
+                    </form>
+                    <form action="/trade/decline/<%= req.id %>" method="POST" style="display:inline;">
+                        <button type="submit">Odrzuć</button>
+                    </form>
+                </td>
+            </tr>
+        <% }); %>
+    </table>
+</div>
+
+<%- include('../partials/footer') %>

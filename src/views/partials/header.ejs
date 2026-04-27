@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Game Market</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+    
+        nav { 
+            display: flex; 
+            align-items: center; 
+            gap: 15px; 
+            margin-bottom: 20px; 
+            border-bottom: 1px solid #ccc; 
+            padding-bottom: 10px; 
+        }
+
+        nav a { text-decoration: none; color: blue; }
+        
+        .user-info { 
+            margin-left: auto;
+        }
+
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    </style>
+</head>
+<body>
+    <nav>
+        <strong>Market:</strong>
+        <a href="/items/shop">Sklep</a>
+        <a href="/items/inventory">Mój Ekwipunek</a>
+        <a href="/trade/trade">Wymiana</a>
+
+        <div class="user-info">
+            <% if (user) { %>
+                Witaj, <strong><%= user.username %></strong>! 
+                Saldo: <strong style="color: green;"><%= user.balance %> zł</strong>
+                <a href="/auth/login" style="margin-left: 10px; color: red;">[Wyloguj]</a>
+            <% } else { %>
+                <a href="/auth/login">Zaloguj się</a>
+            <% } %>
+        </div>
+    </nav>

@@ -1,0 +1,26 @@
+<%- include('../partials/header') %>
+
+<h2>Twój Ekwipunek</h2>
+
+<table>
+    <tr>
+        <th>Przedmiot</th>
+        <th>Cena</th>
+        <th>Akcje</th>
+    </tr>
+    <% items.forEach(item => { %>
+        <tr>
+            <td><%= item.name %></td>
+            <td><%= item.price %> zł</td>
+            <td>
+                <form action="/trade/sell/<%= item.id %>" method="POST" style="display:inline;">
+                    <button type="submit">Sprzedaj</button>
+                </form>
+            </td>
+        </tr>
+    <% }); %>
+</table>
+
+<%- include('../partials/footer') %>
+
+

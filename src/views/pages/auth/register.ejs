@@ -1,0 +1,18 @@
+<%- include('../../partials/header') %>
+
+<div style="max-width: 300px; margin: 50px auto; border: 1px solid #ccc; padding: 20px;">
+    <h2>Rejestracja</h2>
+    <form action="/auth/register" method="POST">
+        <label>Nowy użytkownik:</label><br>
+        <input type="text" name="username" style="width: 100%; margin-bottom: 10px;" required><br>
+        
+        <label>Hasło:</label><br>
+        <input type="password" name="password" style="width: 100%; margin-bottom: 15px;" required><br>
+        
+        <button type="submit" style="width: 100%; background: green; color: white;">Stwórz konto</button>
+    </form>
+    <hr>
+    <p style="font-size: 0.8em;">Masz już konto? <a href="/auth/login">Zaloguj się</a></p>
+</div>
+
+<%- include('../../partials/footer') %>
